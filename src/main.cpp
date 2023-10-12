@@ -131,7 +131,7 @@ void loop()
       static int pos2 = 0;
       int newPos2;
       while (true){
-        delay(5);
+        delay(10);
         newPos2 = encoder2->getPosition();
         Serial.print("pos:");
         Serial.print(newPos2);
@@ -145,7 +145,7 @@ void loop()
       }
       Serial.print("Last pos cylinder hole :");
       Serial.println((int)(pos2));
-      if(pos2 > 4000 && pos2 < 4500){ // Hole OK
+      if(pos2 > 3500 && pos2 < 4500){ // Hole OK
         // Mark /1
         Serial.println(F("Cylinder mark out"));
         digitalWrite(CYL_CNT_MARK, HIGH);

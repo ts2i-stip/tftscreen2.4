@@ -7,19 +7,19 @@
 #define ENC2_A  20
 #define ENC2_B  21
 // Start buttons
-#define START_BTN1   22
-#define START_BTN2   23
+#define START_BTNL   32
+#define START_BTNR   34
 // Cylinder inputs / outputs
-#define CYL_CNT_WIDTH           26
-#define SEN_CYL_CNT_WIDTH       27
+#define CYL_CNT_WIDTH           33
+#define SEN_CYL_CNT_WIDTH       30
 #define TIME_CYL_CNT_WIDTH      5000
-#define CYL_CNT_HOLE            28
-#define SEN_CYL_CNT_HOLE        29
-#define CYL_CNT_OPENING         30
-#define SEN_CYL_CNT_OPENING     31
-#define CYL_CNT_MARK            32
-#define SEN_CYL_CNT_MARK        33
-#define CYL_OPEN_EXIT           34
+#define CYL_CNT_HOLE            37
+#define SEN_CYL_CNT_HOLE        36  // CHECK
+#define CYL_CNT_OPENING         31
+#define SEN_CYL_CNT_OPENING     28
+#define CYL_CNT_MARK            35
+#define SEN_CYL_CNT_MARK        26
+#define CYL_OPEN_EXIT           27
 
 
 // encoder1 to check the width of the piece
@@ -50,8 +50,8 @@ void setup()
   Serial.println("Start checking ...");
 
   // Setup start buttons
-  pinMode(START_BTN1, INPUT_PULLUP);
-  pinMode(START_BTN2, INPUT_PULLUP);
+  pinMode(START_BTNL, INPUT_PULLUP);
+  pinMode(START_BTNR, INPUT_PULLUP);
 
   // Setup cylindes
   pinMode(CYL_CNT_HOLE, OUTPUT);
@@ -80,7 +80,7 @@ void setup()
 } // setup()
 
 int checkCycleStatus(){
-  return digitalRead(START_BTN1) + digitalRead(START_BTN2);
+  return digitalRead(START_BTNL) + digitalRead(START_BTNR);
 }
 
 // Read the current position of the encoder and print out when changed.
@@ -194,9 +194,9 @@ void loop()
     isOnCycle = false;
     while(checkCycleStatus() != 2);
   }
-  /*Serial.print(digitalRead(START_BTN1));
+  /*Serial.print(digitalRead(START_BTNL));
   Serial.print(" and B2 = ");
-  Serial.println(digitalRead(START_BTN2));
+  Serial.println(digitalRead(START_BTNR));
   delay(100);*/
   /*
   static int pos1 = 0;

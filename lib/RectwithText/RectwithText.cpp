@@ -1,63 +1,90 @@
 #include <RectwithText.hpp>
 
-RectwithText::RectwithText(String ptext,
-                           int pfontSize,
-                           Borders_t pborders,
-                           Borders_t pmargins) :
-                           fontSize(pfontSize), 
-                           text(ptext), 
-                           borders(pborders),
-                           margins(pmargins){
-  //draw();
+#define CARARCTER_WIDTH 5
+#define CARACTER_HIGH 7
+
+#define GET_WIDTH(x, sz, mgl) x* sz* CARARCTER_WIDTH + x - 1 + 4 + 2 * mgl
+#define GET_HIGH(y, sz, mgl) y* sz* CARARCTER_WIDTH + y - 1 + 4 + 2 * mgl
+
+RectwithText::RectwithText(String ptext, int pfontSize, Measure_t ppos, Measure_t pdim, Measure_t pmargins) : text(ptext), fontSize(pfontSize), pos(ppos), dim(pdim), margins(pmargins) {
+    if (dim.x < 0) {
+        dim.x = text.length();
+    }
+    if (dim.y < 0) {
+        dim.y = 1;
+    }
 }
 
-int RectwithText::getWidth()
-{
-  int widthByPixel = 5;
-  return borders.right * fontSize * widthByPixel + borders.right - 1 + 4 + 2 * margins.left;
+void RectwithText::setPos(Measure_t pPos) {
+    pos = pPos;
 }
 
-int RectwithText::getHeight()
-{
-  int heightByPixel = 7;
-  return borders.bottom * fontSize * heightByPixel + borders.bottom - 1 + 4 + 2 * margins.top;
+void RectwithText::setDim(Measure_t pDim) {
+    dim = pDim;
 }
 
-void RectwithText::setTextColor(uint16_t color){
-  textColor = color;
+void RectwithText::setMargins(Measure_t pMargins) {
+    margins = pMargins;
 }
 
-void RectwithText::setBackgroudColor(uint16_t color){
-  backgroudColor = color;
+Measure_t RectwithText::getPos() {
+    return pos;
 }
 
-void RectwithText::setBorderColor(uint16_t color){
-  borderColor = color;
+Measure_t RectwithText::getDim() {
+    return dim;
 }
 
-void RectwithText::setText(String t){
-  text = t;
+Measure_t RectwithText::getMargins() {
+    return margins;
 }
 
-void RectwithText::draw(){
-  int w = getWidth();
-  int h = getHeight();
-  int charWidth = fontSize * 5;
-  if(hasBorder){
-    tft.drawRect(borders.left, borders.top, w, h, borderColor);
-  }
-  tft.fillRect(borders.left+1, borders.top+1, w - 2, h - 2, backgroudColor);
-  tft.setTextSize(fontSize);
-  tft.setCursor(borders.left + ((w - (text.length() + 1) * charWidth) / 2),
-  borders.top + 2 + margins.top);
-  tft.print(text);
+void RectwithText::setTextColor(uint16_t color) {
+    textColor = color;
 }
 
-void RectwithText::clear(){
-  int w = getWidth();
-  int h = getHeight();
-  if(hasBorder){
-    tft.drawRect(borders.left, borders.top, w, h, BLACK);
-  }
-  tft.fillRect(borders.left+1, borders.top+1, w - 2, h - 2, BLACK);
+void RectwithText::setBackgroudColor(uint16_t color) {
+    backgroudColor = color;
+}
+
+void RectwithText::setBorderColor(uint16_t color) {
+    borderColor = color;
+}
+
+void RectwithText::setText(String t) {
+    text = t;
+}
+
+void RectwithText::setFontSize(int size) {
+    fontSize = size;
+}
+
+void RectwithText::draw() {
+    int w = GET_WIDTH(dim.x, fontSize, margins.x);
+    int h = GET_HIGH(dim.y, fontSize, margins.y);
+    if (hasBorder) {
+        tft.drawRect(pos.x, pos.y, w, h, borderColor);
+    }
+    tft.fillRect(pos.x + 1, pos.y + 1, w - 2, h - 2, backgroudColor);
+    tft.setTextSize(fontSize);
+    tft.setCursor(pos.x + margins.x + 1,
+                  pos.y + 1 + margins.y);
+    tft.print(text);
+    Serial.print("w = ");
+    Serial.print(w);
+    Serial.print(" h = ");
+    Serial.print(h);
+    Serial.print(" txtx = ");
+    Serial.print(pos.x + margins.x + 1);
+    Serial.print(" txty ");
+    Serial.println(pos.y + 2 + margins.y);
+}
+
+void RectwithText::clear() {
+    int w = GET_WIDTH(dim.x, fontSize, margins.x);
+    int h = GET_HIGH(dim.y, fontSize, margins.y);
+    if (hasBorder) {
+        tft.drawRect(pos.x, pos.y, w, h, BLACK);
+    }
+    tft.fillRect(pos.x + 1, pos.y + 1, w - 2, h - 2, BLACK);
 }

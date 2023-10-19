@@ -1,18 +1,14 @@
 #include <RectwithText.hpp>
 
-#define CARARCTER_WIDTH 5
-#define CARACTER_HIGH 7
-
-#define GET_WIDTH(x, sz, mgl) x* sz* CARARCTER_WIDTH + x - 1 + 4 + 2 * mgl
-#define GET_HIGH(y, sz, mgl) y* sz* CARARCTER_WIDTH + y - 1 + 4 + 2 * mgl
-
-RectwithText::RectwithText(String ptext, int pfontSize, Measure_t ppos, Measure_t pdim, Measure_t pmargins) : text(ptext), fontSize(pfontSize), pos(ppos), dim(pdim), margins(pmargins) {
-    if (dim.x < 0) {
-        dim.x = text.length();
-    }
-    if (dim.y < 0) {
-        dim.y = 1;
-    }
+RectwithText::RectwithText(String ptext, int pfontSize, Measure_t ppos, Measure_t pmargins, Measure_t pdim) : text(ptext), fontSize(pfontSize), pos(ppos), dim(pdim), margins(pmargins) {
+    // if (dim.x < 0) {
+    //     dim.x = strlen(text.c_str());
+    // }
+    // if (dim.y < 0) {
+    //     dim.y = 1;
+    // }
+    // Serial.print("Constructor dim.x = "); Serial.print(dim.x);
+    // Serial.print(", dim.y = "); Serial.println(dim.y);
 }
 
 void RectwithText::setPos(Measure_t pPos) {
@@ -53,6 +49,17 @@ void RectwithText::setBorderColor(uint16_t color) {
 
 void RectwithText::setText(String t) {
     text = t;
+    // Serial.println("inside setText dim.x = "); Serial.print(dim.x);
+    if (dim.x < 0) {
+        dim.x = text.length();// strlen(text.c_str());
+        // Serial.print("setText dim.x = "); Serial.print(dim.x);
+    }
+    if (dim.y < 0) {
+        dim.y = 1;
+        // Serial.print(", dim.y = "); Serial.println(dim.y);
+    }
+    
+    
 }
 
 void RectwithText::setFontSize(int size) {
@@ -87,4 +94,8 @@ void RectwithText::clear() {
         tft.drawRect(pos.x, pos.y, w, h, BLACK);
     }
     tft.fillRect(pos.x + 1, pos.y + 1, w - 2, h - 2, BLACK);
+}
+
+int RectwithText::getFontSize() {
+    return fontSize;
 }

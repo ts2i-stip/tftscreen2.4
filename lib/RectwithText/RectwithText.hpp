@@ -15,6 +15,12 @@
 #define YELLOW 0xFFE0
 #define WHITE 0xFFFF
 
+#define CARARCTER_WIDTH 5
+#define CARACTER_HIGH 7
+
+#define GET_WIDTH(x, sz, mgl) x* sz* CARARCTER_WIDTH + x - 1 + 4 + 2 * mgl
+#define GET_HIGH(y, sz, mgl) y* sz* CARARCTER_WIDTH + y - 1 + 4 + 2 * mgl
+
 extern Adafruit_TFTLCD tft;
 
 typedef struct Measure {
@@ -37,8 +43,8 @@ typedef struct Borders {
 
 class RectwithText {
    private:
-    int fontSize = 1;
-    String text = "1";
+    String text;
+    int fontSize;
     Measure_t pos;
     Measure_t dim;
     Measure_t margins;
@@ -51,14 +57,15 @@ class RectwithText {
     RectwithText(String ptext = "1",
                  int pfontSize = 1,
                  Measure_t ppos = {0, 0},
-                 Measure_t pdim = {-1, -1},
-                 Measure_t pmargins = {10, 1});
+                 Measure_t pmargins = {1, 1},
+                 Measure_t pdim = {-1, -1});
     void setPos(Measure_t pPos);
     void setDim(Measure_t pDim);
     void setMargins(Measure_t pMargins);
     Measure_t getPos();
     Measure_t getDim();
     Measure_t getMargins();
+    int getFontSize();
     void setTextColor(uint16_t color);
     void setBackgroudColor(uint16_t color);
     void setBorderColor(uint16_t color);

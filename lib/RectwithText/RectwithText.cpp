@@ -76,15 +76,17 @@ void RectwithText::draw() {
     tft.setTextSize(fontSize);
     tft.setCursor(pos.x + margins.x + 1,
                   pos.y + 1 + margins.y);
+    tft.setTextColor(textColor);
     tft.print(text);
-    Serial.print("w = ");
-    Serial.print(w);
-    Serial.print(" h = ");
-    Serial.print(h);
-    Serial.print(" txtx = ");
-    Serial.print(pos.x + margins.x + 1);
-    Serial.print(" txty ");
-    Serial.println(pos.y + 2 + margins.y);
+    tft.setTextColor(WHITE);
+    // Serial.print("w = ");
+    // Serial.print(w);
+    // Serial.print(" h = ");
+    // Serial.print(h);
+    // Serial.print(" txtx = ");
+    // Serial.print(pos.x + margins.x + 1);
+    // Serial.print(" txty ");
+    // Serial.println(pos.y + 2 + margins.y);
 }
 
 void RectwithText::clear() {

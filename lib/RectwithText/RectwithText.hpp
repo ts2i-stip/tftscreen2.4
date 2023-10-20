@@ -15,11 +15,11 @@
 #define YELLOW 0xFFE0
 #define WHITE 0xFFFF
 
-#define CARARCTER_WIDTH 5
+#define CARACTER_WIDTH 5
 #define CARACTER_HIGH 7
 
-#define GET_WIDTH(x, sz, mgl) x* sz* CARARCTER_WIDTH + x - 1 + 4 + 2 * mgl
-#define GET_HIGH(y, sz, mgl) y* sz* CARARCTER_WIDTH + y - 1 + 4 + 2 * mgl
+#define GET_WIDTH(x, sz, mgl) x * sz * (CARACTER_WIDTH + 1) + 2 + 2 * mgl
+#define GET_HIGH(y, sz, mgl) y * sz* CARACTER_HIGH + sz + 1 + 2 * mgl
 
 extern Adafruit_TFTLCD tft;
 
